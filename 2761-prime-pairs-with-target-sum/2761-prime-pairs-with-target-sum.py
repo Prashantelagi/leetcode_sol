@@ -1,18 +1,24 @@
+from typing import List
+
 class Solution:
     def findPrimePairs(self, n: int) -> List[List[int]]:
-        def SOE(num):
-            isPrime = [True] * (num+1)
-            isPrime[0] = isPrime[1] = False
-            for p in range(isqrt(num)+1):
-                if isPrime[p]:
-                    for j in range(p*p, num+1, p):
-                        isPrime[j] = False
-            return isPrime
+        res = []
+        
+        if n < 2:
+            return res
+        
+        prime = [True] * (n + 1)
+        prime[0] = prime[1] = False
 
-        isPrime = SOE(n)
+        
+        for i in range(2, int(n ** 0.5) + 1):
+            if prime[i]:
+                for j in range(i * i, n + 1, i):
+                    prime[j] = False
 
-        a = []
-        for i in range(2,n//2+1):
-            if isPrime[i] and isPrime[n-i]:
-                a.append([i, n-i])
-        return a
+        
+        for p in range(2, n // 2 + 1):
+            if prime[p] and prime[n - p]:
+                res.append([p, n - p])
+
+        return res
